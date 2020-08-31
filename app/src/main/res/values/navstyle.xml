@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NavDrawerTextStyle">
+        <item name="android:textSize">16sp</item> <!-- Размер текста -->
+    </style>
+
+    <style name="NavigationViewStyle">
+
+        <item name="android:listPreferredItemHeightSmall">45dp</item><!-- menu item height-->
+        <item name="listPreferredItemHeightSmall">45dp</item><!-- menu item height-->
+    </style>
+</resources>

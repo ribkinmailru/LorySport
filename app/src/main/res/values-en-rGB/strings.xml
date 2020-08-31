@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LorySport</string>
+    <string name="profile">My profile</string>
+    <string name="exersizes">Exercises</string>
+    <string name="Shedule">Schedule</string>
+    <string name="addexe">Add an exersise</string>
+    <string name="fitness">Fitness</string>
+    <string name="body">Bodybyilding</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="next">Next training:</string>
+    <string name="privious">Privious training:</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="run">Running</string>
+    <string name="notrains">No training</string>
+</resources>

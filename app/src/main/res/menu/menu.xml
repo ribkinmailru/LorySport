@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/baseline_home_black_48"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/schedule"
+            android:icon="@drawable/baseline_event_available_black_48"
+            android:title="@string/Shedule" />
+        <item
+            android:id="@+id/params"
+            android:title="@string/params"
+            android:icon="@drawable/baseline_square_foot_black_48"/>
+        <item
+            android:id="@+id/healthy"
+            android:title="@string/healthy"
+            android:icon="@drawable/baseline_square_foot_black_48"/>
+        <item
+            android:id="@+id/exersizes"
+            android:title="@string/exersizes"
+            android:icon="@drawable/baseline_fitness_center_white_48"/>
+        <item
+            android:id="@+id/mytrains"
+            android:title="@string/mytrains"
+            android:icon="@drawable/ic_baseline_star_24"/>
+
+        <item
+            android:id="@+id/stats"
+            android:title="@string/notif"
+            android:icon="@drawable/ic_baseline_notifications_active_24"/>
+
+        <item
+            android:id="@+id/run"
+            android:title="@string/run"
+            android:icon="@drawable/baseline_directions_run_black_48"/>
+
+        <item
+            android:id="@+id/setting"
+            android:title="@string/setting"
+            android:icon="@drawable/ic_baseline_settings_24"/>
+
+
+    </group>
+
+</menu>

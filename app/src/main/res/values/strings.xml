@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">LorySport</string>
+    <string name="profile">Мой Профиль</string>
+    <string name="exersizes">Упражнения</string>
+    <string name="mytrains">Избранное</string>
+    <string name="Favorite">Избранное</string>
+
+
+    <string name="Shedule">Расписание</string>
+    <string name="addexe">Добавить упражнение</string>
+    <string name="body">Бодибилдинг</string>
+    <string name="type">Тип</string>
+    <string name="subtype">Подтип</string>
+
+
+    <string name="fitness">Фитнес</string>
+    <string name="permission_denied" translatable="false">Location permission required</string>
+    <string name="run">Бег</string>
+    <string name="params">Параметры</string>
+    <string name="notrains">Тренеровок нет</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="yesterday">Вчера</string>
+    <string name="next">Следующая тренеровка:</string>
+    <string name="privious">Предыдущая тренеровка:</string>
+    <string name="ask">Удалить тренеровку за этот день?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="day1"> день</string>
+    <string name="day2"> дня</string>
+    <string name="day3"> дней</string>
+    <string name="last1">за последний</string>
+    <string name="last2">за последние</string>
+    <string name="empty">Пусто</string>
+    <string name="custom">Кастомизация:</string>
+    <string name="setting">Настройки</string>
+    <string name="notif">Уведомления</string>
+    <string name="healthy">Здоровье</string>
+
+
+
+    <string name="start">Старт</string>
+    <string name="pouse">Пауза</string>
+    <string name="stop">Стоп</string>
+    <string name="kkal">Сожжено</string>
+    <string name="kkals">ккал</string>
+
+    <string name="ok">Ок</string>
+    <string name="nos">Отмена</string>
+
+    <string name="kg">кг</string>
+    <string name="sm">см</string>
+
+    <string name="n1">Упражнения с именем "</string>
+    <string name="n2">" уже существует!</string>
+
+    <string name="legs">Ноги</string>
+    <string name="chest">Грудь</string>
+    <string name="shoulder">Плечи</string>
+    <string name="trapezi">Трапеция</string>
+    <string name="delty">Спина</string>
+    <string name="biseps">Бицепс</string>
+    <string name="triseps">Трицепс</string>
+    <string name="predpleche">Предплечье</string>
+    <string name="press">Пресс</string>
+
+
+    <string name="k1">Квадрицепс</string>
+    <string name="k2">Бицепс бедра</string>
+    <string name="k4">Икроножная мышца</string>
+
+    <string name="exe">Название упражнения</string>
+    <string name="description">Описание упражнения</string>
+    <string name="error">Введите название упражнения</string>
+
+    <string name="c1">Название упражнения</string>
+    <string name="c2">Средний сегмент</string>
+    <string name="c3">Нижний сегмент</string>
+
+    <string name="d1">Передние дельты</string>
+    <string name="d2">Средние дельты</string>
+    <string name="d3">Задние дельты</string>
+
+    <string name="b1">Мышца выпрямляющая позвоночник</string>
+    <string name="b2">Трапеция</string>
+    <string name="b3">Широчайшая мышца</string>
+
+
+</resources>
