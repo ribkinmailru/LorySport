@@ -15,9 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity2"
-            android:screenOrientation="portrait"
-            />
+        <activity android:name=".EditPhoto"></activity>
+        <activity android:name=".SplashScreen" />
+        <activity
+            android:name=".MainActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
 
         <service
             android:name=".ReminderService"
@@ -38,9 +43,9 @@
             android:name=".odometrFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashScreen"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:name=".RegandLoginactivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

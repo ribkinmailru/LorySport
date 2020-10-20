@@ -4,15 +4,25 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.customview.widget.ViewDragHelper;
@@ -20,44 +30,51 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class MainActivity2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    int i = 1;
+
+    public static User user;
+    FirebaseFirestore fire;
+
+    public static int i = 1;
     int custom;
     SharedPreferences sPref;
     FragmentTransaction ft;
     int ch;
-    final GregorianCalendar calendar = new GregorianCalendar();
-    final DateFormat dateFormate = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
-    final DateFormat forLong = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
     ImageView delete;
     ImageView add;
-    int position;
-    int subposition;
+    public static int position;
+    public static int subposition;
     int counttodel;
-    DrawerLayout drawer;
-    ActionBarDrawerToggle togle;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        fire = FirebaseFirestore.getInstance();
+        fire.collection("users").whereEqualTo("number", FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document:task.getResult()){
+                        user = document.toObject(User.class);
+                        Log.d("tag", user.getName());
+                    }
+                }
+            }
+        });
+
+
         setContentView(R.layout.activity_main2);
         TextView textview = findViewById(R.id.textView3);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        ImageView search = findViewById(R.id.search);
+        search.setVisibility(View.GONE);
+        EditText search_field = findViewById(R.id.search_fiead);
+        search_field.setVisibility(View.GONE);
         delete = findViewById(R.id.delete);
         delete.setVisibility(View.GONE);
         add = findViewById(R.id.add);
@@ -69,8 +86,8 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         }
         sPref = getPreferences(MODE_PRIVATE);
         custom = sPref.getInt("custom", 1);
-        drawer = (DrawerLayout) findViewById(R.id.drawer);
-        togle = new ActionBarDrawerToggle(this,
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
+        ActionBarDrawerToggle togle = new ActionBarDrawerToggle(this,
                 drawer, toolbar, R.string.app_name, R.string.app_name);
         drawer.addDrawerListener(togle);
 
@@ -120,7 +137,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
             togle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.pink));
             setTheme(R.style.custom3);
         }
-        if (custom == 2) {
+        else if (custom == 2) {
             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar));
             textview.setTextColor(getResources().getColor(R.color.white));
             togle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
@@ -150,7 +167,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
                 i = 6;
                 break;
             case R.id.mytrains:
-                fragment = new ExeandTrains();
+                fragment = new ExesFragment();
                 i = 2;
                 break;
             case R.id.exersizes:
@@ -158,15 +175,15 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
                 i = 3;
                 break;
             case R.id.schedule:
-                fragment = new Schedule();
+                fragment = new ContactsFragment();
                 i = 4;
                 break;
             case R.id.params:
-                fragment = new BodyFragment(1);
+                fragment = new BodyFrag(false);
                 i = 5;
                 break;
             case R.id.healthy:
-                fragment = new BodyFragment(0);
+                fragment = new BodyFrag(true);
                 i = 0;
                 break;
             case R.id.run:
@@ -248,60 +265,39 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         ed.apply();
     }
 
-    public final String upday() {
-        DateFormat day = new SimpleDateFormat("EEEE", Locale.getDefault());
-        return day.format(calendar.getTime()).toUpperCase();
-    }
-
-    public final String downday() {
-        return dateFormate.format(calendar.getTime()).toUpperCase();
-    }
-
-    public final String notUpperCase() {
-        return dateFormate.format(calendar.getTime());
-    }
 
 
     public final void changefragment(int t) {
         Fragment fragment1 = null;
         ft = getSupportFragmentManager().beginTransaction();
-        if(t==1) {
-            fragment1 = new tablayoutfargment();
-            ft.setCustomAnimations(R.animator.appdel, R.animator.tabapp);
-        }
-        if(t==2){
-            fragment1 = new SubType();
-            ft.addToBackStack("tag");
-        }
-        if(t==3){
-            fragment1 = new addexeFragment();
-            ft.addToBackStack("tag");
-        }
-        if(t==4){
-            fragment1 = new Schedule();
-        }
-        if(t==5){
-            fragment1 = new CreateExerciseFragment();
-        }
-        if(t==6){
-            fragment1 = new MainActivity();
+        switch (t){
+            case 1:
+                fragment1 = new tablayoutfargment();
+                ft.setCustomAnimations(R.animator.appdel, R.animator.tabapp);
+                break;
+            case 2:
+                fragment1 = new SubType();
+                ft.addToBackStack("tag");
+                break;
+            case 3:
+                fragment1 = new ExesFragment();
+                ft.addToBackStack("tag");
+                break;
+            case 4:
+                fragment1 = new Schedule();
+                break;
+            case 5:
+                fragment1 = new CreateExerciseFragment();
+                break;
+            case 6:
+                fragment1 = new MainActivity();
+                break;
         }
         ft.replace(R.id.frame, fragment1, "tag");
         ft.commit();
         ft = null;
     }
 
-    public final long getmillis(){
-        String milli = forLong.format(calendar.getTime());
-        Date dater = null;
-        try {
-            dater = forLong.parse(milli);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        assert dater != null;
-        return dater.getTime();
-    }
 
 
     public final void startnotif(long s, boolean delete, int ids){
@@ -327,14 +323,10 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         }
     }
 
-    public void changeBody(int wh){
+    public void changeBody(boolean wh){
         Fragment fragment1 = null;
         ft = getSupportFragmentManager().beginTransaction();
-        if(wh==1){
-            fragment1 = new BodyFragment(1);
-        }else{
-            fragment1 = new BodyFragment(0);
-        }
+        fragment1 = new BodyFrag(wh);
         ft.replace(R.id.frame, fragment1, "tag");
         ft.commit();
         ft = null;

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "452179568089",
+    "firebase_url": "https://lorysport-d45e4.firebaseio.com",
+    "project_id": "lorysport-d45e4",
+    "storage_bucket": "lorysport-d45e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452179568089:android:f4acc8d02e9bf7fae165c8",
+        "android_client_info": {
+          "package_name": "com.example.lorysport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452179568089-cutid9cffb3t6i7jifmopn2cef03jomi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lorysport",
+            "certificate_hash": "624df1df7f9b425572e1275b2cd34897747d72a5"
+          }
+        },
+        {
+          "client_id": "452179568089-jcngd5cibt2eujebs8qv21tmupintpdm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV9PQqX2qkf0HWNQRNj_jvcXoIRqIWOQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452179568089-jcngd5cibt2eujebs8qv21tmupintpdm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

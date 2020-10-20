@@ -1,220 +1,109 @@
 package com.example.lorysport;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.io.ByteArrayOutputStream;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.concurrent.ExecutionException;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MainActivity extends Fragment {
-    Date mil;
-    long timeInMillis;
-    long min;
-    long max;
-    TimePicker times;
+    StorageReference mStorage;
+    CropImageView cookie;
+    LinearLayout nast;
+    Uri uri;
+    ImageView avatar;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                 Bundle savedInstanceState) {
-        ArrayList<Long> next;
-        ArrayList<Long> prev;
-        GregorianCalendar calendar = new GregorianCalendar();
-        DateFormat forLong = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-        final MainActivity2 activity = ((MainActivity2) getActivity());
+        mStorage = FirebaseStorage.getInstance().getReference().child(FirebaseAuth.getInstance().getUid());
         TextView title = getActivity().findViewById(R.id.textView3);
         title.setText(R.string.profile);
         View view = inflater.inflate(R.layout.activity_main, container, false);
-        String millis = forLong.format(calendar.getTime());
-        try {
-            mil = forLong.parse(millis);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        timeInMillis = mil.getTime();
-        AsyncTask<Context,Void,SQLiteDatabase> mm = new mm();
-        mm.execute(getContext());
-        SQLiteDatabase dbs = null;
-        try {
-            dbs = mm.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        AsyncTask<SQLiteDatabase,Void,Cursor> curs = new curs();
-        curs.execute(dbs);
-        Cursor cursors = null;
-        try {
-            cursors = curs.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        next = new ArrayList<>();
-        prev = new ArrayList<>();
-
-        cursors.moveToFirst();
-        long s;
-        do {
-            try {
-                s = cursors.getLong(0);
-                if (s < timeInMillis) {
-                    prev.add(s);
-                }
-                if (s >= timeInMillis) {
-                    next.add(s);
-                }
-            }catch (RuntimeException ignored){}
-        }while (cursors.moveToNext());
-
-
-    if(next.size()!=0) {
-        min = next.get(0);
-    }
-    if(prev.size()!=0) {
-        max= prev.get(0);
-        }
-     for (int k = 0; k<prev.size(); k++) {
-            if (max < prev.get(k)) {
-                max = prev.get(k);
-            }
-        }
-     for (int t = 0; t<next.size(); t++){
-                if (min > next.get(t)){
-                    min = next.get(t);
-                }
-            }
-
-
-
-        Date datenext = new Date(min);
-        Date dateprev = new Date(max);
-
-
-
-
-        DateFormat dateFormate = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
-        String trin = dateFormate.format(datenext);
-        String previous = dateFormate.format(dateprev);
-        TextView nexts = view.findViewById(R.id.textView8);
-        TextView prevs = view.findViewById(R.id.textView9);
-        ImageView im = view.findViewById(R.id.notif);
-        nexts.setText(trin);
-        prevs.setText(previous);
-
-
-        if(min==0){
-            nexts.setText(R.string.notrains);
-
-        }
-        if(max==0){
-            prevs.setText(R.string.notrains);
-        }
-        if(min==timeInMillis){
-            nexts.setText(R.string.today);
-
-        }
-        if(min==timeInMillis+86400000){
-            nexts.setText(R.string.tomorrow);
-
-        }
-        if(max==timeInMillis-86400000){
-            prevs.setText(R.string.yesterday);
-        }
-        cursors.close();
-        dbs.close();
-        final FloatingActionButton but = view.findViewById(R.id.button3);
-        final FloatingActionButton butnp = view.findViewById(R.id.buttons);
-
-        times = view.findViewById(R.id.times);
-        times.setVisibility(View.GONE);
-        im.setOnClickListener(new View.OnClickListener() {
+        avatar = view.findViewById(R.id.hhhh);
+        avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                times.setVisibility(View.VISIBLE);
-                but.setVisibility(View.VISIBLE);
-                butnp.setVisibility(View.VISIBLE);
-                times.setIs24HourView(true);
-            }
-        });
-        but.setVisibility(View.GONE);
-        butnp.setVisibility(View.GONE);
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int hour = times.getCurrentHour();
-                int minutes = times.getCurrentMinute();
-                long c;
-                if(min!=0) {
-                    c = min + hour * 3600000L + minutes * 60000L;
-                }
-                else {
-                    c = timeInMillis + hour * 3600000L + minutes * 60000L;
-//
-                }
-
-
-                times.setVisibility(View.GONE);
-                but.setVisibility(View.GONE);
-                butnp.setVisibility(View.GONE);
-                Toast.makeText(activity, R.string.notif, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        butnp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                times.setVisibility(View.GONE);
-                but.setVisibility(View.GONE);
-                butnp.setVisibility(View.GONE);
+                getImage();
             }
         });
 
         return view;
     }
 
-    private static class mm extends AsyncTask<Context,Void,SQLiteDatabase>{
-
-        @Override
-        protected SQLiteDatabase doInBackground(Context... voids) {
-            SQLiteOpenHelper date = new DateDatabase(voids[0]);
-            return date.getReadableDatabase();
-        }
-    }
 
 
-    private static class curs extends AsyncTask<SQLiteDatabase,Void,Cursor>{
-
-        @Override
-        protected Cursor doInBackground(SQLiteDatabase... dbs) {
-            return dbs[0].query("DATES",
-                    new String[]{"MILLIS"},
-                    null,null,null,null,null);
-        }
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        times = null;
+        avatar = null;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && data!=null && data.getData()!=null && resultCode == RESULT_OK ){
+            uri = data.getData();
+            Intent intent = new Intent(getActivity(), EditPhoto.class);
+            intent.putExtra("uri", uri);
+            startActivityForResult(intent,2);
+        }
+        if(requestCode == 2){
+            byte[] asd = data.getByteArrayExtra("bitmap");
+            Bitmap bits = BitmapFactory.decodeByteArray(asd,0,asd.length);
+            avatar.setImageBitmap(bits);
+
+        }
+    }
+
+    private void getImage(){
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, 1);
+    }
+
+    private void uploadimage(String image){
+        Bitmap bitmap = ((BitmapDrawable) avatar.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] byteArray = baos.toByteArray();
+        final StorageReference mRef  = mStorage.child(image);
+        UploadTask up = mRef.putBytes(byteArray);
+        Task<Uri> task = up.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                return null;
+            }
+        });
+    }
+
 }

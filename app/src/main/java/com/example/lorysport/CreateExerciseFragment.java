@@ -147,7 +147,7 @@ public class CreateExerciseFragment extends Fragment {
                 InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-                Fragment fragment = new addexeFragment();
+                Fragment fragment = new ExesFragment();
                 ft.replace(R.id.frame, fragment, "tag");
                 ft.commit();
             }

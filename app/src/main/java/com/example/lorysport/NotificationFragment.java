@@ -123,7 +123,6 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     return view;
     }
 
-
     public void setDate(){
         SQLiteOpenHelper not = new NotifDatabase(getContext());
         SQLiteDatabase db = not.getReadableDatabase();

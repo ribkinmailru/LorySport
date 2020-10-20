@@ -38,7 +38,6 @@
     <string name="healthy">Здоровье</string>
 
 
-
     <string name="start">Старт</string>
     <string name="pouse">Пауза</string>
     <string name="stop">Стоп</string>
@@ -84,6 +83,15 @@
     <string name="b1">Мышца выпрямляющая позвоночник</string>
     <string name="b2">Трапеция</string>
     <string name="b3">Широчайшая мышца</string>
+
+    <string name="name">Имя</string>
+    <string name="phone">Телефон</string>
+    <string name="reg">Зарегестрироваться</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="haveacc">У вас уже есть аккаунт?</string>
+    <string name="repass">Востановление пароля</string>
 
 
 </resources>

@@ -22,7 +22,7 @@ public class OdometerService extends Service {
         private static double distanceInMeters;
         private static Location lastLocation = null;
         public static final String PERMISSION_STRING
-                = android.Manifest.permission.ACCESS_COARSE_LOCATION;
+                = android.Manifest.permission.ACCESS_FINE_LOCATION;
 
         public class OdometerBinder extends Binder {
             OdometerService getOdometer() {

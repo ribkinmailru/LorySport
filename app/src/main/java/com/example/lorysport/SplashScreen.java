@@ -17,15 +17,9 @@ public class SplashScreen extends AppCompatActivity {
 
         SQLiteOpenHelper exe = new ExeDatabase(this);
         SQLiteDatabase dbe = exe.getReadableDatabase();
-        SQLiteOpenHelper body = new BodyDatabase(this);
-        SQLiteDatabase dbb = body.getReadableDatabase();
-        SQLiteOpenHelper date = new DateDatabase(this);
-        SQLiteDatabase dbd = date.getReadableDatabase();
         SQLiteOpenHelper Notif = new NotifDatabase(this);
         SQLiteDatabase dbn = Notif.getReadableDatabase();
         dbe.close();
-        dbb.close();
-        dbd.close();
         dbn.close();
 
         startActivity(intent);

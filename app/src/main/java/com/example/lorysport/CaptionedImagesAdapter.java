@@ -295,7 +295,7 @@ class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImagesAdapter
             }
             if(download[position]!=null){
                 File file = new File(Environment.getExternalStorageDirectory(), download[position]+".jpg");
-                Picasso.with(ctx).
+                Picasso.get().
                         load(file).into(holder.image);
             }
 

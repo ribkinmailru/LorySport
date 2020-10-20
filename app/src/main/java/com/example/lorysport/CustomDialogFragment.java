@@ -18,6 +18,9 @@ import androidx.fragment.app.Fragment;
 
 import java.util.concurrent.CountDownLatch;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 public class CustomDialogFragment extends DialogFragment implements View.OnClickListener {
     MainActivity2 activity;
     final int ids;
@@ -25,6 +28,7 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
     AlertDialog dialogs;
     methods met1;
     int pose;
+    Realm realm;
 
 
     public interface methods{
@@ -62,6 +66,7 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
         btnReopenId.setOnClickListener(this);
         btnCancelId.setOnClickListener(this);
         activity = ((MainActivity2) getActivity());
+        realm = Realm.getDefaultInstance();
         return dialogs;
     }
 
@@ -71,13 +76,10 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
         if (ids == 1) {
             switch (v.getId()) {
                 case R.id.button4:
-                    String currentdate = activity.notUpperCase();
-                    SQLiteOpenHelper db = new DateDatabase(getContext());
-                    SQLiteDatabase exe = db.getWritableDatabase();
-                    exe.delete("DATES",
-                            "DATE=?",
-                            new String[]{currentdate});
-                    db.close();
+                    long millis = AppManager.getmillis();
+                    realm.beginTransaction();
+                    final RealmResults<Train> query = realm.where(Train.class).equalTo("time", millis).findAll();
+                    query.deleteAllFromRealm();
                     activity.changefragment(4);
                     dialogs.dismiss();
                     break;

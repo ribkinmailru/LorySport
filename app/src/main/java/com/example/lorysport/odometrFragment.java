@@ -115,9 +115,6 @@ public class odometrFragment extends AppCompatActivity{
     }
 
 
-
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
