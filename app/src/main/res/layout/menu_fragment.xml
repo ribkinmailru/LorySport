@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="230dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:overScrollMode="never"
+        android:elevation="8dp"
+        app:itemTextAppearance="@style/NavDrawerTextStyle"
+        app:itemHorizontalPadding="25dp"
+        app:theme="@style/NavigationViewStyle"
+        android:paddingTop="100dp"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        android:background="#131313"
+        app:itemIconPadding="10dp"
+        app:menu="@menu/menu" />
+</RelativeLayout>
