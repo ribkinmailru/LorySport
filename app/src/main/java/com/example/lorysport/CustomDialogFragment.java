@@ -1,8 +1,6 @@
 package com.example.lorysport;
 
 import android.app.Dialog;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,9 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
-import java.util.concurrent.CountDownLatch;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -80,7 +75,7 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
                     realm.beginTransaction();
                     final RealmResults<Train> query = realm.where(Train.class).equalTo("time", millis).findAll();
                     query.deleteAllFromRealm();
-                    activity.changefragment(4);
+                    activity.changefragment(4, null);
                     dialogs.dismiss();
                     break;
                 case R.id.button2:
@@ -91,10 +86,6 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
         if (ids == 2) {
             switch (v.getId()) {
                 case R.id.button4:
-                    SQLiteOpenHelper exe = new ExeDatabase(getContext());
-                    SQLiteDatabase db = exe.getWritableDatabase();
-                    db.delete("EXE", "NAME=?", new String[]{bs});
-                    db.close();
                     dialogs.dismiss();
                     met1.onOk(pose);
                     break;

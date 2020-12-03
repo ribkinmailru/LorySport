@@ -45,19 +45,19 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 color = 1;
                 activity.custom=color;
                 activity.recreate();
-                activity.changefragment(6);
+                activity.changefragment(6, null);
                 break;
             case R.id.yellow:
                 color = 2;
                 activity.custom=color;
                 activity.recreate();
-                activity.changefragment(6);
+                activity.changefragment(6, null);
                 break;
             case R.id.green:
                 color = 3;
                 activity.custom=color;
                 activity.recreate();
-                activity.changefragment(6);
+                activity.changefragment(6, null);
                 break;
 
         }

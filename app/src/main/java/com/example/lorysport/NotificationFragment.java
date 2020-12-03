@@ -48,27 +48,6 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         setDate();
             RecyclerView recycler = view.findViewById(R.id.notifs);
             adapter = new CaptionedImagesAdapter(dates);
-            adapter.inputtype = 5;
-            adapter.setListener5(new CaptionedImagesAdapter.Listener5() {
-                @Override
-                public void onClick5(int position, String bs, View linee) {
-                    SQLiteOpenHelper notif = new NotifDatabase(getContext());
-                    SQLiteDatabase db = notif.getReadableDatabase();
-                    Cursor cursor = db.query("NOTIF",
-                            new String[]{"_id"},
-                            "DATE=?",
-                            new String[]{bs},null,null,null);
-                    cursor.moveToFirst();
-                    activity.startnotif(0, true, cursor.getInt(0));
-                    SQLiteDatabase write = notif.getWritableDatabase();
-                    write.delete("NOTIF", "_id=?",new String[]{Integer.toString(cursor.getInt(0))});
-                    setDate();
-                    adapter.changeDatar(dates, position);
-                    cursor.close();
-                    db.close();
-                    write.close();
-                }
-            });
             LinearLayoutManager manager = new LinearLayoutManager(getContext());
             recycler.setLayoutManager(manager);
             recycler.setAdapter(adapter);

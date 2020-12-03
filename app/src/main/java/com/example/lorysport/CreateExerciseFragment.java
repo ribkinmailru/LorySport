@@ -50,7 +50,6 @@ public class CreateExerciseFragment extends Fragment {
     int custom;
 
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.createfragment, container, false);
         but = view.findViewById(R.id.button);
@@ -60,11 +59,11 @@ public class CreateExerciseFragment extends Fragment {
         description = view.findViewById(R.id.editTextTextPersonName2);
         activity = ((MainActivity2) getActivity());
         custom = activity.custom;
-        if (custom == 2){
+        if (custom == 2) {
             but.setColorFilter(Color.argb(255, 255, 255, 255));
             no.setColorFilter(Color.argb(255, 255, 255, 255));
         }
-        if (custom == 3){
+        if (custom == 3) {
             but.setColorFilter(Color.argb(255, 255, 255, 255));
             no.setColorFilter(Color.argb(255, 255, 255, 255));
         }
@@ -108,54 +107,6 @@ public class CreateExerciseFragment extends Fragment {
     private void SavePicture(ImageView iv, String folderToSave) {
         OutputStream fOut = null;
 
-        try {
-            String names = name.getText().toString();
-            SQLiteOpenHelper exes = new ExeDatabase(getContext());
-            SQLiteDatabase dbs = exes.getReadableDatabase();
-            Cursor cursor = dbs.query("EXE",
-                    null, "NAME=?", new String[]{names}, null,null,null);
-            if(cursor.getCount()>0){
-                Toast.makeText(activity, getString(R.string.n1) + names + getString(R.string.n2), Toast.LENGTH_SHORT).show();
-            }
-            if (names.matches("")) {
-                Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show();
 
-            }if(!names.matches("") && cursor.getCount()==0) {
-                String des = description.getText().toString();
-                String t = Long.toString(System.currentTimeMillis());
-                File file = new File(folderToSave, t + ".jpg");
-                fOut = new FileOutputStream(file);
-                SQLiteOpenHelper exe = new ExeDatabase(getActivity());
-                SQLiteDatabase db = exe.getWritableDatabase();
-                ContentValues content = new ContentValues();
-                content.put("NAME", names);
-                content.put("DESCRIPTION", des);
-                content.put("FAVORITE", 0);
-                content.put("DOWNLOAD", t);
-                content.put("TYPE", activity.position);
-                content.put("SUBTYPE", activity.subposition);
-                db.insert("EXE", null, content);
-                db.close();
-                BitmapDrawable drawableforimage = (BitmapDrawable) iv.getDrawable();
-                Bitmap src = drawableforimage.getBitmap();
-
-                src.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-
-                fOut.flush();
-                fOut.close();
-                MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
-                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-                Fragment fragment = new ExesFragment();
-                ft.replace(R.id.frame, fragment, "tag");
-                ft.commit();
-            }
-            cursor.close();
-            dbs.close();
-        }
-        catch (Exception ignored){}
     }
-
-
 }

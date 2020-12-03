@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -22,9 +24,15 @@ import io.realm.RealmQuery;
 
 public class ExesFragment extends Fragment {
     ArrayList<Exercise> exe;
+    ArrayList<String> references;
     FirebaseFirestore fire;
     Realm realm;
     public int id;
+    private boolean addexe;
+
+    public ExesFragment(boolean addexe){
+        this.addexe = addexe;
+    }
 
     @Nullable
     @Override
@@ -32,6 +40,7 @@ public class ExesFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         View view = inflater.inflate(R.layout.exes_fragment, container,false);
         RecyclerView recycler = view.findViewById(R.id.rec_exe);
+        references = new ArrayList<>();
         LinearLayoutManager linear = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(linear);
         getexe(recycler);
@@ -42,15 +51,16 @@ public class ExesFragment extends Fragment {
     public void getexe(final RecyclerView recyclerView){
         exe = new ArrayList<>();
         fire = FirebaseFirestore.getInstance();
-        fire.collection("exe").whereEqualTo("position", 0).whereEqualTo("subposition", 0).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        fire.collection("exe").whereEqualTo("position", AppManager.position).whereEqualTo("subposition", AppManager.subposition).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(QueryDocumentSnapshot s : queryDocumentSnapshots) {
+                for(DocumentSnapshot s : queryDocumentSnapshots.getDocuments()) {
+                    references.add(s.getReference().getPath());
                     exe.add(s.toObject(Exercise.class));
                     Log.d("tag", s.toObject(Exercise.class).name);
                 }
                 final ExersisesAdapter adapter = new ExersisesAdapter(exe,getContext());
-                if(MainActivity2.i==3) {
+                if(!addexe) {
                     adapter.setListener(new ExersisesAdapter.Listener() {
                         @Override
                         public void onClick(LinearLayout frima, int position) {
@@ -59,6 +69,12 @@ public class ExesFragment extends Fragment {
                             } else {
                                 frima.setVisibility(View.GONE);
                             }
+                        }
+                    });
+                    adapter.setSend(new ExersisesAdapter.Listener() {
+                        @Override
+                        public void onClick(LinearLayout frima, int position) {
+                            ((MainActivity2) getActivity()).changefragment(11,references.get(position));
                         }
                     });
                 }
@@ -76,6 +92,10 @@ public class ExesFragment extends Fragment {
                             s.addexe(exe.get(position));
                             realm.copyToRealmOrUpdate(s);
                             realm.commitTransaction();
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            Fragment fragment = new Schedule();
+                            ft.replace(R.id.frame,fragment,"tag");
+                            ft.commit();
                         }
                     });
                 }

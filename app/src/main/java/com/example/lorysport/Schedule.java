@@ -42,9 +42,8 @@ public class Schedule extends Fragment implements View.OnClickListener {
         delete = activity.findViewById(R.id.delete);
         anim = AnimationUtils.loadAnimation(activity,  R.anim.delete);
         delete.setVisibility(View.VISIBLE);
-        if(activity.i!=activity.counttodel) {
             delete.startAnimation(anim);
-        }
+
         activity.counttodel = activity.i;
         TextView title = activity.findViewById(R.id.textView3);
         title.setText(R.string.Shedule);
@@ -92,7 +91,8 @@ public class Schedule extends Fragment implements View.OnClickListener {
                 anim = AnimationUtils.loadAnimation(activity, R.anim.apeardelete);
                 delete.startAnimation(anim);
                 delete.setVisibility(View.GONE);
-                activity.changefragment(1);
+                ((MainActivity2) getActivity()).addexe = true;
+                activity.changefragment(1, null);
             }
         });
 
@@ -121,7 +121,7 @@ public class Schedule extends Fragment implements View.OnClickListener {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 calendar.setVisibility(View.GONE);
                 AppManager.calendar.set(year, month, dayOfMonth);
-                activity.changefragment(4);
+                activity.changefragment(4, null);
 
             }
         });
@@ -133,11 +133,11 @@ public class Schedule extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.imageButton1:
                 AppManager.calendar.add(Calendar.DATE, -1);
-                activity.changefragment(4);
+                activity.changefragment(4, null);
                 break;
             case R.id.imageButton:
                 AppManager.calendar.add(Calendar.DATE, +1);
-                activity.changefragment(4);
+                activity.changefragment(4, null);
                 break;
         }
     }
@@ -161,25 +161,18 @@ public class Schedule extends Fragment implements View.OnClickListener {
 
 
     @Override
-    public void onStop() {
-        super.onStop();
-
-            if(activity.counttodel==0) {
-                anim = AnimationUtils.loadAnimation(activity, R.anim.apeardelete);
-                delete.startAnimation(anim);
-                delete.setVisibility(View.GONE);
-            }
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
+        anim = AnimationUtils.loadAnimation(activity, R.anim.apeardelete);
+        delete.startAnimation(anim);
+        delete.setVisibility(View.GONE);
         activity = null;
         delete.setOnClickListener(null);
         delete = null;
         anim = null;
         recycler.setAdapter(null);
         recycler = null;
+
 
 
     }

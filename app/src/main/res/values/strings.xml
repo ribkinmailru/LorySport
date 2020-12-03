@@ -53,16 +53,6 @@
     <string name="n1">Упражнения с именем "</string>
     <string name="n2">" уже существует!</string>
 
-    <string name="legs">Ноги</string>
-    <string name="chest">Грудь</string>
-    <string name="shoulder">Плечи</string>
-    <string name="trapezi">Трапеция</string>
-    <string name="delty">Спина</string>
-    <string name="biseps">Бицепс</string>
-    <string name="triseps">Трицепс</string>
-    <string name="predpleche">Предплечье</string>
-    <string name="press">Пресс</string>
-
 
     <string name="k1">Квадрицепс</string>
     <string name="k2">Бицепс бедра</string>
@@ -87,11 +77,71 @@
     <string name="name">Имя</string>
     <string name="phone">Телефон</string>
     <string name="reg">Зарегестрироваться</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="enter">Войти</string>
     <string name="haveacc">У вас уже есть аккаунт?</string>
-    <string name="repass">Востановление пароля</string>
+    <string name="notrightcode">Вы ввели неправильный код!</string>
+    <string name="code">Код подтверждения</string>
+    <string name="approve">Подтвердить</string>
 
+    <string name="status">Hey i\'m using LorySport!</string>
+
+    <string name="online">В сети</string>
+    <string name="offline">Не в сети</string>
+    <string name="contacts">Контакты</string>
+    <string name="send">Отправить</string>
+
+    <string name="contactisempty">Список контактов пуст!</string>
+    <string name="messagesisempty">Сообщений пока нет!</string>
+    <string name="addphoto">Добавить фото</string>
+    <string name="writeamessage">Написать</string>
+
+    <string-array name="body">
+        <item>Вес</item>
+        <item>Рост</item>
+        <item>Охват шеи</item>
+        <item>Охват плеч</item>
+        <item>Охват груди</item>
+        <item>Охват талии</item>
+        <item>Охват бедер</item>
+        <item>Охват голени</item>
+        <item>Охват руки</item>
+        <item>Охват предплечья</item>
+        <item>Охват запястья</item>
+        <item>Процент жира</item>
+    </string-array>
+
+    <string-array name="health">
+        <item>Пульс перед нагрузкой</item>
+        <item>Пульс после нагрузки</item>
+        <item>Объем груди при вдохе</item>
+        <item>Объем груди при выдохе</item>
+        <item>Артериальное давление верхниее</item>
+        <item>Артериальное давление нижнее</item>
+        <item>Задержка дыхания</item>
+    </string-array>
+
+    <string-array name="types">
+        <item>Ноги</item>
+        <item>Грудь</item>
+        <item>Плечи</item>
+        <item>Трапеция</item>
+        <item>Спина</item>
+        <item>Бицепс</item>
+        <item>Трицепс</item>
+        <item>Предплечье</item>
+        <item>Пресс</item>
+    </string-array>
+
+    <array name="bodybilding_photo">
+        <item> @drawable/legss</item>
+        <item>@drawable/chesssst</item>
+        <item>@drawable/shoulders</item>
+        <item>@drawable/trap</item>
+        <item>@drawable/back</item>
+        <item>@drawable/biseps</item>
+        <item>@drawable/trisepz</item>
+        <item>@drawable/predpleche</item>
+        <item>@drawable/press</item>
+    </array>
 
 </resources>

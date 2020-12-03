@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -15,14 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditPhoto"></activity>
-        <activity android:name=".SplashScreen" />
+        <activity android:name=".RegandLoginactivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity2"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+            android:theme="@style/Base.Theme.AppCompat"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".ReminderService"
@@ -43,9 +45,9 @@
             android:name=".odometrFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegandLoginactivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait">
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

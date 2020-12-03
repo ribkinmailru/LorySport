@@ -5,9 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
-    android:theme="?attr/actionBarTheme"
-    app:titleTextColor="#FFFFFF" >
+    android:background="@color/white"
+    android:theme="?attr/actionBarTheme">
+    <Space
+        android:layout_width="@dimen/image_final_width"
+        android:layout_height="@dimen/image_final_width"
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
+        android:id="@+id/notcont"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,7 +40,9 @@
             android:textColor="@color/dark"
             android:textSize="19sp"
             android:textStyle="bold"
-            android:gravity="start"/>
+            android:gravity="start"
+            android:inputType="number"
+            android:maxLines="1"/>
 
         <ImageView
         android:id="@+id/delete"
@@ -55,5 +65,63 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/baseline_search_24"
             android:layout_marginEnd="20dp"/>
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/messages"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/baseline_send_24" />
+
+            <TextView
+                android:id="@+id/countofmessages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/message"
+                android:visibility="gone"
+                android:gravity="center_horizontal|center_vertical"
+                android:minWidth="15dp"
+                android:minHeight="15dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cont"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/contact"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:civ_border_color="@color/grey"
+                app:civ_border_width="1dp"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="5dp">
+            <TextView
+                android:id="@+id/personname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark"/>
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </androidx.appcompat.widget.Toolbar>

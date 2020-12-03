@@ -1,6 +1,8 @@
 package com.example.lorysport;
 
 
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,39 +21,24 @@ MainActivity2 activity;
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bodybuild, container, false);
         activity = ((MainActivity2) getActivity());
+        Resources res = getResources();
 
-        int[] image  = {R.drawable.legss, R.drawable.chesssst, R.drawable.shoulders,
-               R.drawable.trapezi, R.drawable.back, R.drawable.biseps,
-                R.drawable.trisepz, R.drawable.predpleche, R.drawable.press};
-
-
-        String[] nameArray = {getString(R.string.legs),
-                getString(R.string.chest),
-                getString(R.string.shoulder),
-                getString(R.string.trapezi),
-                getString(R.string.delty),
-                getString(R.string.biseps),
-                getString(R.string.triseps),
-                getString(R.string.predpleche),
-                getString(R.string.press)};
-
-
-
+        TypedArray image  = res.obtainTypedArray(R.array.bodybilding_photo);
+        String[] nameArray = res.getStringArray(R.array.types);
         RecyclerView recyclerView = view.findViewById(R.id.recyclertype);
         recyclerView.setHasFixedSize(true);
-        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(nameArray, image);
-        adapter.inputtype=2;
+        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(nameArray, image,null);
         adapter.setListener1(new CaptionedImagesAdapter.Listener1() {
             @Override
             public void onClick1(int position, View view){
                 if(position == 5 | position == 6) {
-                activity.subposition = 0;
-                activity.changefragment(3);
+                AppManager.subposition = 0;
+                activity.changefragment(3, null);
 
                 }else {
-                    activity.changefragment(2);
+                    activity.changefragment(2, null);
                 }
-                activity.position = position;
+                AppManager.position = position;
             }
         });
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),3);

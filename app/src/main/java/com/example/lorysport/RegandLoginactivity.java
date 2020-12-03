@@ -2,13 +2,9 @@ package com.example.lorysport;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,41 +19,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.Any;
 import com.hbb20.CountryCodePicker;
-
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 
 public class RegandLoginactivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private LinearLayout login;
-    private DatabaseReference mData;
+    private LinearLayout login, regs, codelay;
     private FirebaseFirestore fire;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private LinearLayout regs;
-    private LinearLayout logs;
     private String numbers,names;
-    private CountryCodePicker rpicker;
-    private String mVerificationId;
-    private String mCode;
-    private SharedPreferences sPref;
-
+    private CountryCodePicker rpicker, rpicker2;
+    private String varify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +49,9 @@ public class RegandLoginactivity extends AppCompatActivity {
         final EditText name = findViewById(R.id.name);
         final EditText rphone = findViewById(R.id.numberphone);
         regs = findViewById(R.id.regestration);
-        logs = findViewById(R.id.login);
         regs.setVisibility(View.GONE);
+        codelay = findViewById(R.id.indentific);
+        codelay.setVisibility(View.GONE);
         TextView zareg = findViewById(R.id.zareg);
         TextView haveacc = findViewById(R.id.textView14);
         haveacc.setOnClickListener(new View.OnClickListener() {
@@ -86,15 +68,39 @@ public class RegandLoginactivity extends AppCompatActivity {
         });
         rpicker = findViewById(R.id.ccp);
         rpicker.registerCarrierNumberEditText(rphone);
+        rpicker2 = findViewById(R.id.ccp2);
+        rpicker2.registerCarrierNumberEditText(phone);
+        final EditText editcode = findViewById(R.id.code);
 
         final Button reg, log, accept;
         login = findViewById(R.id.login);
-        log = findViewById(R.id.log);
         reg = findViewById(R.id.reg);
+        fire = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser()!=null) {
-            change();
-        }
+        log = findViewById(R.id.log);
+        accept = findViewById(R.id.accept);
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                varifidecode(editcode.getText().toString());
+            }
+        });
+
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numbers = rpicker2.getFullNumberWithPlus();
+                boolean validphone = rpicker.isValidFullNumber();
+                if(validphone) {
+                    verifyuser(numbers);
+                    changeelement(3);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Ты ебалн?", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
 
 
 
@@ -105,8 +111,8 @@ public class RegandLoginactivity extends AppCompatActivity {
                 numbers = rpicker.getFullNumberWithPlus();
                 boolean validphone = rpicker.isValidFullNumber();
                 if(validphone) {
-                    Log.d("Работает", "Rabotaet");
                     verifyuser(numbers);
+                    changeelement(3);
                 }else{
                     Toast.makeText(getApplicationContext(), "Ты ебалн?", Toast.LENGTH_SHORT).show();
 
@@ -117,8 +123,10 @@ public class RegandLoginactivity extends AppCompatActivity {
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                mCode = phoneAuthCredential.getSmsCode();
-                signInWithPhoneAuthCredential(phoneAuthCredential);
+                String code = phoneAuthCredential.getSmsCode();
+                if(code!=null){
+                    varifidecode(code);
+                }
             }
 
             @Override
@@ -130,26 +138,26 @@ public class RegandLoginactivity extends AppCompatActivity {
             @Override
             public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(s, forceResendingToken);
-                mVerificationId = s;
+                varify = s;
             }
         };
 
     }
 
-    public void changeelement(int e){
-        if(e==1){
+    public void changeelement(int e) {
+        if (e == 1) {
             login.setVisibility(View.GONE);
+            codelay.setVisibility(View.GONE);
             regs.setVisibility(View.VISIBLE);
-        }else if(e==2){
+        } else if (e == 2) {
             regs.setVisibility(View.GONE);
+            codelay.setVisibility(View.GONE);
             login.setVisibility(View.VISIBLE);
+        }else{
+            login.setVisibility(View.GONE);
+            regs.setVisibility(View.GONE);
+            codelay.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        fire = FirebaseFirestore.getInstance();
     }
 
     public void change(){
@@ -157,18 +165,21 @@ public class RegandLoginactivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void Writenewuser(String name, String number) {
-        User user = new User(name, number);
-        HashMap<String, Object> us = new HashMap();
-        user.contacts.add("Лохпидр");
+    public void Writenewuser(String name, String number, String uid) {
+        final User user = new User();
+        user.name = AppManager.firstUpperCase(name);
+        user.number = number;
+        user.status = getString(R.string.status);
+        HashMap<String, Object> us = new HashMap<>();
+        us.put("status", user.status);
         us.put("name", user.name);
         us.put("number", user.number);
-        us.put("contacts", user.contacts);
-        fire.collection("users").document(mAuth.getCurrentUser().getUid()).set(us)
+        fire.collection("users").document(uid).set(us)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
+                        AppManager.user = user;
+                        change();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -176,6 +187,10 @@ public class RegandLoginactivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void varifidecode(String code){
+        PhoneAuthCredential credental = PhoneAuthProvider.getCredential(varify, code);
+        signInWithPhoneAuthCredential(credental);
     }
 
 
@@ -196,31 +211,23 @@ public class RegandLoginactivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             final FirebaseUser user = task.getResult().getUser();
-                            DocumentReference query = fire.collection("users").document(mAuth.getCurrentUser().getUid());
+                            DocumentReference query = fire.collection("users").document(user.getUid());
                             query.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot document = task.getResult();
-                                        if(document.exists()){
+                                        if (document.exists()) {
+                                            AppManager.user = document.toObject(User.class);
                                             change();
-                                        }else{
-                                            Writenewuser(names, user.getPhoneNumber());
-                                            change();
+                                        } else {
+                                            Writenewuser(names, user.getPhoneNumber(), user.getUid());
                                         }
-                                        sPref = getPreferences(MODE_PRIVATE);
-                                        SharedPreferences.Editor ed = sPref.edit();
-                                        ed.putString("mVar", mVerificationId);
-                                        ed.putString("kode", mCode);
-                                        ed.apply();
-
                                     }
                                 }
                             });
-
-                        }
-                        else {
-                            Log.d("tag", "Ті пидор?");
+                        }else{
+                            Toast.makeText(getApplicationContext(), R.string.notrightcode, Toast.LENGTH_SHORT).show();
                         }
                     }});}
 

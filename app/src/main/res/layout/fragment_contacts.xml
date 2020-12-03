@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <TextView
+        android:id="@+id/contactisempty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:text="@string/contactisempty"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+
+<androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ContactsFragment"
-    android:id="@+id/contacts">
+    android:id="@+id/contacts"/>
 
 
-</androidx.recyclerview.widget.RecyclerView>
+</FrameLayout>

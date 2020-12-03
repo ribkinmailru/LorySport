@@ -20,7 +20,7 @@ public class SubType extends Fragment {
         final MainActivity2 activity = ((MainActivity2) getActivity());
         TextView title = ((MainActivity2) getActivity()).findViewById(R.id.textView3);
         title.setText(R.string.subtype);
-        int t = activity.position;
+        int t = AppManager.position;
         String[] nameArray = null;
         int[] imageArray = null;
         switch (t){
@@ -84,13 +84,12 @@ public class SubType extends Fragment {
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclertype2);
-        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(nameArray, imageArray);
-        adapter.inputtype=2;
+        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(nameArray,null, imageArray);
         adapter.setListener1(new CaptionedImagesAdapter.Listener1() {
             @Override
             public void onClick1(int position, View view) {
-                activity.subposition = position;
-                activity.changefragment(3);
+                AppManager.subposition = position;
+                activity.changefragment(3, null);
             }
         });
         GridLayoutManager layoutManager = new GridLayoutManager(activity,3);

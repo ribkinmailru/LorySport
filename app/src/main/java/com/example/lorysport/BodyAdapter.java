@@ -67,7 +67,6 @@ public class BodyAdapter extends RecyclerView.Adapter<BodyAdapter.ViewHolder> {
             pararm = ll.findViewById(R.id.textView11);
             changes = ll.findViewById(R.id.textView4);
             editpara = ll.findViewById(R.id.editpara);
-            changes.setVisibility(View.GONE);
 
         }
     }
@@ -76,7 +75,8 @@ public class BodyAdapter extends RecyclerView.Adapter<BodyAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final BodyAdapter.ViewHolder holder, final int position) {
         holder.name.setText(names[position]);
         holder.pararm.setText(params[position]);
-            if(firstparams.get(position) - lastparams[position]>0) {
+        double b = firstparams.get(position) - lastparams[position];
+            if(b>0) {
                 holder.changes.setTextColor(context.getResources().getColor(R.color.green));
                 s ="+ "+ format.format(firstparams.get(position) - lastparams[position])
                         + " " + context.getString(R.string.last1) + " " + AppManager.form.format(firstparams.get(position) - lastparams[position]);
@@ -88,7 +88,9 @@ public class BodyAdapter extends RecyclerView.Adapter<BodyAdapter.ViewHolder> {
             }
             if(firstparams.get(position)!=0) {
                 holder.editpara.setText(Double.toString(firstparams.get(position)));
-                holder.changes.setVisibility(View.VISIBLE);
+            }
+            if(b!=0){
+                holder.changes.setVisibility(View.GONE);
                 holder.changes.setText(s);
             }
 

@@ -13,17 +13,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ExersisesAdapter extends RecyclerView.Adapter<ExersisesAdapter.ViewHolder> {
+public class ExersisesAdapter extends RecyclerView.Adapter<ExersisesAdapter.ViewHolder>{
     ArrayList<Exercise> exe;
     Context context;
     private Listener listener;
+    private Listener send;
 
     public void setListener(Listener listener) {
         this.listener = listener;
+    }
+    public void setSend(Listener send){
+        this.send = send;
     }
 
 
@@ -47,6 +52,18 @@ public class ExersisesAdapter extends RecyclerView.Adapter<ExersisesAdapter.View
         View viewUser = inflater.inflate(R.layout.linearforchose,parent,false);
         viewHolder = new ExersisesAdapter.ViewHolder(viewUser);
         viewHolder.frima.setVisibility(View.GONE);
+        viewHolder.lina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(viewHolder.frima, viewHolder.getAdapterPosition());
+            }
+        });
+        viewHolder.send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send.onClick(viewHolder.frima, viewHolder.getAdapterPosition());
+            }
+        });
         return viewHolder;
     }
 
@@ -57,7 +74,7 @@ public class ExersisesAdapter extends RecyclerView.Adapter<ExersisesAdapter.View
         LinearLayout lina;
         TextView name;
         LinearLayout frima;
-        ImageButton detail, favorite, delete, diffic;
+        ImageButton send, favorite, delete, diffic;
 
         public ViewHolder(View ll) {
             super(ll);
@@ -69,6 +86,7 @@ public class ExersisesAdapter extends RecyclerView.Adapter<ExersisesAdapter.View
             frima = ll.findViewById(R.id.frima);
             favorite = ll.findViewById(R.id.fav);
             delete = ll.findViewById(R.id.delete);
+            send = ll.findViewById(R.id.send);
         }
     }
 
@@ -78,12 +96,6 @@ public class ExersisesAdapter extends RecyclerView.Adapter<ExersisesAdapter.View
         holder.name.setText(exe.get(position).getName());
         Log.d("tag", exe.get(position).image);
         Picasso.get().load(exe.get(position).image).into(holder.image);
-        holder.lina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClick(holder.frima, position);
-            }
-        });
 
 
     }

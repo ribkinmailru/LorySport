@@ -12,7 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@drawable/shapefield">
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:ccp_defaultNameCode="UA"
+                android:layout_marginStart="10dp"
+                app:ccp_showNameCode="false"/>
 
     <EditText
         android:id="@+id/email"
@@ -20,20 +34,20 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="@string/phone"/>
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="@string/phone"/>
+        android:hint="@string/phone"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_vertical"
+        android:imeOptions="actionDone"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/log"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:background="@drawable/tab_rounded_pressed"
+            android:text="@string/enter"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"/>
 
         <TextView
             android:id="@+id/zareg"
@@ -52,18 +66,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:background="@drawable/shapefield">
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/ccp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 app:ccp_defaultNameCode="UA"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                app:ccp_showNameCode="false"/>
 
             <EditText
         android:id="@+id/numberphone"
@@ -71,23 +89,33 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/phone"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:background="@android:color/transparent"
+                android:layout_gravity="center_vertical"
+                android:imeOptions="actionNext"/>
      </LinearLayout>
 
     <EditText
         android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:ems="10"
         android:hint="@string/name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:background="@drawable/shapefield"
+        android:layout_marginTop="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/reg"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="@string/reg"
-            android:hint=""/>
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/tab_rounded_pressed"/>
 
         <TextView
             android:id="@+id/textView14"
@@ -98,5 +126,37 @@
             android:layout_marginTop="30dp"
             android:textColor="@color/blue"
             />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/indentific"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+
+<EditText
+    android:id="@+id/code"
+    android:ems="10"
+    android:hint="@string/code"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/shapefield"
+    android:layout_marginTop="15dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:imeOptions="actionDone"
+    />
+        <Button
+            android:id="@+id/accept"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_rounded_pressed"
+            android:textColor="@color/white"
+            android:text="@string/approve"
+            android:layout_marginTop="15dp" />
+
+
     </LinearLayout>
 </FrameLayout>
